@@ -1,0 +1,1240 @@
+<!-- WealthPath — financial clarity tool -->
+<style>
+  :root {
+    --bg: #E7E3D6;
+    --surface: #F7F4EC;
+    --surface-2: #EFEADC;
+    --ink: #1F2A24;
+    --ink-soft: #52604F;
+    --ink-faint: #7C8A78;
+    --line: rgba(31, 42, 36, 0.14);
+    --line-strong: rgba(31, 42, 36, 0.28);
+    --accent: #1F6F63;
+    --accent-ink: #0F4038;
+    --accent-soft: rgba(31, 111, 99, 0.12);
+    --accent-warm: #BD6B33;
+    --accent-warm-soft: rgba(189, 107, 51, 0.14);
+    --health-poor: #B24B3C;
+    --health-poor-soft: rgba(178, 75, 60, 0.14);
+    --health-average: #B4842A;
+    --health-average-soft: rgba(180, 132, 42, 0.14);
+    --health-strong: #2E7D5B;
+    --health-strong-soft: rgba(46, 125, 91, 0.14);
+    --shadow: 0 1px 2px rgba(20, 26, 22, 0.06), 0 12px 28px -14px rgba(20, 26, 22, 0.22);
+    --radius: 14px;
+    --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    --font-body: "Segoe UI", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "Cascadia Code", "SF Mono", Consolas, "Liberation Mono", monospace;
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #101E1B;
+    --surface: #17322B;
+    --surface-2: #1D3B32;
+    --ink: #ECE7DC;
+    --ink-soft: #A9B6AC;
+    --ink-faint: #7C8F82;
+    --line: rgba(236, 231, 220, 0.14);
+    --line-strong: rgba(236, 231, 220, 0.26);
+    --accent: #4FB3A0;
+    --accent-ink: #BEEBE0;
+    --accent-soft: rgba(79, 179, 160, 0.16);
+    --accent-warm: #E0955A;
+    --accent-warm-soft: rgba(224, 149, 90, 0.16);
+    --health-poor: #E2695A;
+    --health-poor-soft: rgba(226, 105, 90, 0.16);
+    --health-average: #E0C15A;
+    --health-average-soft: rgba(224, 193, 90, 0.16);
+    --health-strong: #4FAE82;
+    --health-strong-soft: rgba(79, 174, 130, 0.16);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 20px 40px -18px rgba(0, 0, 0, 0.55);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101E1B;
+      --surface: #17322B;
+      --surface-2: #1D3B32;
+      --ink: #ECE7DC;
+      --ink-soft: #A9B6AC;
+      --ink-faint: #7C8F82;
+      --line: rgba(236, 231, 220, 0.14);
+      --line-strong: rgba(236, 231, 220, 0.26);
+      --accent: #4FB3A0;
+      --accent-ink: #BEEBE0;
+      --accent-soft: rgba(79, 179, 160, 0.16);
+      --accent-warm: #E0955A;
+      --accent-warm-soft: rgba(224, 149, 90, 0.16);
+      --health-poor: #E2695A;
+      --health-poor-soft: rgba(226, 105, 90, 0.16);
+      --health-average: #E0C15A;
+      --health-average-soft: rgba(224, 193, 90, 0.16);
+      --health-strong: #4FAE82;
+      --health-strong-soft: rgba(79, 174, 130, 0.16);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 20px 40px -18px rgba(0, 0, 0, 0.55);
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+
+  /* ---------- Header ---------- */
+
+  .hero {
+    position: relative;
+    padding: 56px 0 40px;
+    overflow: hidden;
+  }
+
+  .hero canvas {
+    position: absolute;
+    inset: -20px -24px auto -24px;
+    width: calc(100% + 48px);
+    height: 260px;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  :root[data-theme="dark"] .hero canvas { opacity: 0.4; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .hero canvas { opacity: 0.4; }
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .wordmark {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .wordmark svg { flex: none; }
+
+  .wordmark span {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 3.4vw + 1rem, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 28px 0 10px;
+  }
+
+  .hero p.tagline {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 40ch;
+    margin: 0;
+  }
+
+  /* ---------- Waypoint trail ---------- */
+
+  .trail {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    margin: 8px 0 28px;
+  }
+
+  .trail-node { position: relative; text-align: center; }
+
+  .trail-line {
+    position: absolute;
+    top: 9px;
+    left: -50%;
+    right: 50%;
+    height: 2px;
+    background: var(--line-strong);
+    z-index: 0;
+  }
+
+  .trail-node:first-child .trail-line { display: none; }
+
+  .trail-node.done .trail-line,
+  .trail-node.active .trail-line { background: var(--accent); }
+
+  .trail-dot {
+    position: relative;
+    z-index: 1;
+    width: 18px;
+    height: 18px;
+    margin: 0 auto 8px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--line-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.25s ease, background 0.25s ease;
+  }
+
+  .trail-node.active .trail-dot {
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+
+  .trail-node.done .trail-dot {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .trail-node.done .trail-dot::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .trail-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+  }
+
+  .trail-node.active .trail-label { color: var(--accent-ink); font-weight: 600; }
+
+  /* ---------- Wizard ---------- */
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .wizard { padding: 40px; min-height: 320px; display: flex; flex-direction: column; }
+
+  .step-count {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  .step {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .step.current {
+    display: flex;
+    animation: rise 0.42s ease both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .step.current { animation: none; }
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.3rem, 1.6vw + 1rem, 1.7rem);
+    margin: 14px 0 6px;
+    text-wrap: balance;
+  }
+
+  .step p.hint {
+    color: var(--ink-soft);
+    margin: 0 0 28px;
+    max-width: 52ch;
+  }
+
+  .amount-field {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 2px solid var(--line-strong);
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+    transition: border-color 0.2s ease;
+  }
+
+  .amount-field:focus-within { border-color: var(--accent); }
+
+  .amount-field .currency {
+    font-family: var(--font-mono);
+    font-size: 1.6rem;
+    color: var(--ink-faint);
+  }
+
+  .amount-field input {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 2.1rem;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--ink);
+    width: 100%;
+    min-width: 0;
+  }
+
+  .amount-field input::placeholder { color: var(--ink-faint); opacity: 0.6; }
+
+  .field-note {
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    min-height: 1.2em;
+  }
+
+  .field-note.error { color: var(--health-poor); }
+
+  .goal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 520px) {
+    .goal-grid { grid-template-columns: 1fr; }
+  }
+
+  .goal-option {
+    text-align: left;
+    padding: 16px 18px;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    cursor: pointer;
+    transition: border-color 0.18s ease, background 0.18s ease;
+  }
+
+  .goal-option:hover { border-color: var(--accent); }
+
+  .goal-option.selected {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    font-weight: 600;
+  }
+
+  .goal-option .glyph {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+    color: var(--accent-ink);
+  }
+
+  .wizard-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 28px;
+  }
+
+  button {
+    font-family: var(--font-body);
+    cursor: pointer;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border-radius: 999px;
+    border: 1.5px solid transparent;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--surface);
+  }
+
+  :root[data-theme="dark"] .btn-primary { color: #0B1917; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .btn-primary { color: #0B1917; }
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .btn-primary:not(:disabled):hover { transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    border-color: var(--line-strong);
+    color: var(--ink-soft);
+  }
+
+  .btn-ghost:hover { border-color: var(--ink-faint); color: var(--ink); }
+
+  .btn-ghost:disabled { visibility: hidden; }
+
+  /* ---------- Dashboard ---------- */
+
+  #dashboard { display: none; margin-top: 40px; }
+  #dashboard.visible { display: block; animation: rise 0.5s ease both; }
+  @media (prefers-reduced-motion: reduce) { #dashboard.visible { animation: none; } }
+
+  .dash-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .dash-head h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .edit-link {
+    background: none;
+    border: none;
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 4px 0;
+  }
+
+  .edit-link:hover { color: var(--accent-ink); }
+
+  .health-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px 7px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin-bottom: 14px;
+  }
+
+  .health-pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .health-poor-tone { background: var(--health-poor-soft); color: var(--health-poor); }
+  .health-poor-tone .dot { background: var(--health-poor); }
+  .health-average-tone { background: var(--health-average-soft); color: var(--health-average); }
+  .health-average-tone .dot { background: var(--health-average); }
+  .health-strong-tone { background: var(--health-strong-soft); color: var(--health-strong); }
+  .health-strong-tone .dot { background: var(--health-strong); }
+
+  .health-message {
+    font-size: 1.02rem;
+    max-width: 62ch;
+    margin: 0 0 28px;
+    color: var(--ink-soft);
+  }
+
+  .dash-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 640px) {
+    .dash-grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 26px 28px;
+  }
+
+  .card h3 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin: 0 0 20px;
+    font-weight: 600;
+  }
+
+  .flow-row { margin-bottom: 18px; }
+  .flow-row:last-child { margin-bottom: 0; }
+
+  .flow-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+  }
+
+  .flow-label .amt {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+
+  .flow-track {
+    height: 10px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    overflow: hidden;
+  }
+
+  .flow-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .flow-fill.income { background: var(--accent); }
+  .flow-fill.expenses { background: var(--accent-warm); }
+
+  .flow-net {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .flow-net .net-label { font-size: 0.88rem; color: var(--ink-soft); }
+  .flow-net .net-amt {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .ring-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .ring-wrap { position: relative; width: 148px; height: 148px; }
+
+  .ring-figure {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ring-figure .pct {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .ring-figure .pct-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    margin-top: 4px;
+  }
+
+  .ring-caption {
+    margin-top: 16px;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+
+  .rec-card h3 { margin-bottom: 16px; }
+
+  .rec-list { display: flex; flex-direction: column; gap: 16px; }
+
+  .rec-item {
+    display: flex;
+    gap: 14px;
+    padding: 16px 18px;
+    background: var(--surface-2);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .rec-item .rec-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin: 0 0 4px;
+  }
+
+  .rec-item p { margin: 0; font-size: 0.9rem; color: var(--ink-soft); }
+
+  /* ---------- Booking ---------- */
+
+  .booking {
+    margin-top: 40px;
+    padding: 36px 40px;
+  }
+
+  .booking h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    margin: 0 0 4px;
+  }
+
+  .booking p.sub {
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+    max-width: 56ch;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  @media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } }
+
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field.full { grid-column: 1 / -1; }
+
+  .form-field label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+  }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    padding: 11px 13px;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.18s ease;
+  }
+
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus { border-color: var(--accent); }
+
+  .form-field textarea { resize: vertical; min-height: 80px; font-family: var(--font-body); }
+
+  .booking-submit-row {
+    margin-top: 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .booking-note { font-size: 0.82rem; color: var(--ink-faint); }
+
+  .confirmation {
+    display: none;
+    text-align: left;
+    padding: 8px 0 0;
+  }
+
+  .confirmation.visible { display: block; animation: rise 0.4s ease both; }
+
+  .confirmation .stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-ink);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .confirmation dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 16px;
+    font-size: 0.92rem;
+    margin: 0;
+  }
+
+  .confirmation dt { color: var(--ink-faint); }
+  .confirmation dd { margin: 0; font-weight: 600; }
+
+  footer {
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 0.8rem;
+    margin-top: 56px;
+  }
+
+  .theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    box-shadow: var(--shadow);
+  }
+</style>
+
+<button class="theme-toggle" id="themeToggle" type="button">Toggle theme</button>
+
+<div class="wrap">
+
+  <header class="hero">
+    <canvas id="contourCanvas" aria-hidden="true"></canvas>
+    <div class="hero-inner">
+      <div class="wordmark">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+          <circle cx="17" cy="17" r="16" stroke="var(--accent)" stroke-width="1.2" opacity="0.55"/>
+          <circle cx="17" cy="17" r="11" stroke="var(--accent)" stroke-width="1.2" opacity="0.75"/>
+          <circle cx="17" cy="17" r="6" stroke="var(--accent)" stroke-width="1.4"/>
+          <circle cx="17" cy="17" r="1.6" fill="var(--accent-warm)"/>
+        </svg>
+        <span>WealthPath</span>
+      </div>
+      <h1>Clarity and control over your financial future.</h1>
+      <p class="tagline">Four questions in, a clear read on where you stand — and the next right move.</p>
+    </div>
+  </header>
+
+  <nav class="trail" id="trail" aria-label="Intake progress">
+    <div class="trail-node" data-step="0">
+      <div class="trail-line"></div>
+      <div class="trail-dot"></div>
+      <div class="trail-label">Income</div>
+    </div>
+    <div class="trail-node" data-step="1">
+      <div class="trail-line"></div>
+      <div class="trail-dot"></div>
+      <div class="trail-label">Expenses</div>
+    </div>
+    <div class="trail-node" data-step="2">
+      <div class="trail-line"></div>
+      <div class="trail-dot"></div>
+      <div class="trail-label">Savings</div>
+    </div>
+    <div class="trail-node" data-step="3">
+      <div class="trail-line"></div>
+      <div class="trail-dot"></div>
+      <div class="trail-label">Goal</div>
+    </div>
+  </nav>
+
+  <section class="panel wizard" id="wizard">
+    <div class="step-count" id="stepCount">Step 1 of 4</div>
+
+    <div class="step current" data-step="0">
+      <h2>What's your monthly income?</h2>
+      <p class="hint">Take-home pay, after tax — include any side income you can count on each month.</p>
+      <div class="amount-field">
+        <span class="currency">$</span>
+        <input type="number" inputmode="decimal" min="0" step="1" id="incomeInput" placeholder="0" autocomplete="off">
+      </div>
+      <div class="field-note" id="incomeNote">&nbsp;</div>
+    </div>
+
+    <div class="step" data-step="1">
+      <h2>What do you spend in a typical month?</h2>
+      <p class="hint">Rent or mortgage, bills, groceries, debt payments — everything that goes out.</p>
+      <div class="amount-field">
+        <span class="currency">$</span>
+        <input type="number" inputmode="decimal" min="0" step="1" id="expensesInput" placeholder="0" autocomplete="off">
+      </div>
+      <div class="field-note" id="expensesNote">&nbsp;</div>
+    </div>
+
+    <div class="step" data-step="2">
+      <h2>How much do you have in savings right now?</h2>
+      <p class="hint">Cash, emergency fund, anything set aside and accessible — not retirement accounts.</p>
+      <div class="amount-field">
+        <span class="currency">$</span>
+        <input type="number" inputmode="decimal" min="0" step="1" id="savingsInput" placeholder="0" autocomplete="off">
+      </div>
+      <div class="field-note" id="savingsNote">&nbsp;</div>
+    </div>
+
+    <div class="step" data-step="3">
+      <h2>What matters most right now?</h2>
+      <p class="hint">This shapes the recommendations we give you.</p>
+      <div class="goal-grid" id="goalGrid">
+        <button type="button" class="goal-option" data-goal="Save more">
+          <span class="glyph">↟</span>Save more
+        </button>
+        <button type="button" class="goal-option" data-goal="Get out of debt">
+          <span class="glyph">⟲</span>Get out of debt
+        </button>
+        <button type="button" class="goal-option" data-goal="Invest">
+          <span class="glyph">⇗</span>Invest
+        </button>
+        <button type="button" class="goal-option" data-goal="Buy a home">
+          <span class="glyph">⌂</span>Buy a home
+        </button>
+      </div>
+      <div class="field-note" id="goalNote">&nbsp;</div>
+    </div>
+
+    <div class="wizard-nav">
+      <button class="btn btn-ghost" id="backBtn" type="button">Back</button>
+      <button class="btn btn-primary" id="nextBtn" type="button">Continue</button>
+    </div>
+  </section>
+
+  <section id="dashboard">
+    <div class="dash-head">
+      <h2>Your financial snapshot</h2>
+      <button class="edit-link" id="editLink" type="button">Edit answers</button>
+    </div>
+    <div id="healthPill"></div>
+    <p class="health-message" id="healthMessage"></p>
+
+    <div class="dash-grid">
+      <div class="card">
+        <h3>Income vs. Expenses</h3>
+        <div class="flow-row">
+          <div class="flow-label"><span>Income</span><span class="amt" id="incomeAmt"></span></div>
+          <div class="flow-track"><div class="flow-fill income" id="incomeBar"></div></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-label"><span>Expenses</span><span class="amt" id="expensesAmt"></span></div>
+          <div class="flow-track"><div class="flow-fill expenses" id="expensesBar"></div></div>
+        </div>
+        <div class="flow-net">
+          <span class="net-label" id="netLabel">Left over each month</span>
+          <span class="net-amt" id="netAmt"></span>
+        </div>
+      </div>
+
+      <div class="card ring-card">
+        <h3>Savings Rate</h3>
+        <div class="ring-wrap">
+          <svg width="148" height="148" viewBox="0 0 148 148">
+            <circle cx="74" cy="74" r="68" fill="none" stroke="var(--surface-2)" stroke-width="10"/>
+            <circle cx="74" cy="74" r="58" fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 5"/>
+            <circle id="rateRing" cx="74" cy="74" r="68" fill="none" stroke="var(--accent)" stroke-width="10"
+              stroke-linecap="round" transform="rotate(-90 74 74)"/>
+          </svg>
+          <div class="ring-figure">
+            <span class="pct" id="ratePct">0%</span>
+            <span class="pct-label">of income</span>
+          </div>
+        </div>
+        <p class="ring-caption" id="runwayCaption"></p>
+      </div>
+    </div>
+
+    <div class="card rec-card">
+      <h3>Recommended next steps</h3>
+      <div class="rec-list" id="recList"></div>
+    </div>
+  </section>
+
+  <section class="panel booking">
+    <h2>Talk it through with an advisor</h2>
+    <p class="sub">Book a free 20-minute session — we'll walk through your snapshot together and map out next steps.</p>
+
+    <form id="bookingForm">
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="nameInput">Name</label>
+          <input type="text" id="nameInput" required autocomplete="name">
+        </div>
+        <div class="form-field">
+          <label for="emailInput">Email</label>
+          <input type="email" id="emailInput" required autocomplete="email">
+        </div>
+        <div class="form-field">
+          <label for="timeInput">Preferred time</label>
+          <select id="timeInput" required>
+            <option value="" disabled selected>Choose a slot</option>
+            <option>Weekday mornings</option>
+            <option>Weekday afternoons</option>
+            <option>Weekday evenings</option>
+            <option>Weekend</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="notesInput">Notes (optional)</label>
+          <input type="text" id="notesInput" placeholder="Anything specific to cover?">
+        </div>
+      </div>
+      <div class="booking-submit-row">
+        <button class="btn btn-primary" type="submit">Request a session</button>
+        <span class="booking-note">We'll confirm by email within one business day.</span>
+      </div>
+    </form>
+
+    <div class="confirmation" id="confirmation">
+      <div class="stamp">✓ Request received</div>
+      <dl>
+        <dt>Name</dt><dd id="confName"></dd>
+        <dt>Email</dt><dd id="confEmail"></dd>
+        <dt>Time</dt><dd id="confTime"></dd>
+      </dl>
+    </div>
+  </section>
+
+  <footer>WealthPath — a private snapshot, nothing is sent anywhere.</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var state = { income: null, expenses: null, savings: null, goal: null };
+  var currentStep = 0;
+  var totalSteps = 4;
+
+  var wizard = document.getElementById("wizard");
+  var trail = document.getElementById("trail");
+  var stepCount = document.getElementById("stepCount");
+  var backBtn = document.getElementById("backBtn");
+  var nextBtn = document.getElementById("nextBtn");
+  var steps = wizard.querySelectorAll(".step");
+  var trailNodes = trail.querySelectorAll(".trail-node");
+
+  var incomeInput = document.getElementById("incomeInput");
+  var expensesInput = document.getElementById("expensesInput");
+  var savingsInput = document.getElementById("savingsInput");
+  var goalGrid = document.getElementById("goalGrid");
+
+  var fmt = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+
+  function setNote(id, msg, isError) {
+    var el = document.getElementById(id);
+    el.textContent = msg || " ";
+    el.className = "field-note" + (isError ? " error" : "");
+  }
+
+  function validateCurrent() {
+    if (currentStep === 0) {
+      var v = parseFloat(incomeInput.value);
+      if (isNaN(v) || v <= 0) { setNote("incomeNote", "Enter an amount greater than zero.", true); return false; }
+      state.income = v;
+      setNote("incomeNote", "");
+      return true;
+    }
+    if (currentStep === 1) {
+      var e = parseFloat(expensesInput.value);
+      if (isNaN(e) || e < 0) { setNote("expensesNote", "Enter a valid amount.", true); return false; }
+      state.expenses = e;
+      setNote("expensesNote", "");
+      return true;
+    }
+    if (currentStep === 2) {
+      var s = parseFloat(savingsInput.value);
+      if (isNaN(s) || s < 0) { setNote("savingsNote", "Enter a valid amount.", true); return false; }
+      state.savings = s;
+      setNote("savingsNote", "");
+      return true;
+    }
+    if (currentStep === 3) {
+      if (!state.goal) { setNote("goalNote", "Pick one to continue.", true); return false; }
+      setNote("goalNote", "");
+      return true;
+    }
+    return true;
+  }
+
+  function render() {
+    steps.forEach(function (s) {
+      s.classList.toggle("current", parseInt(s.dataset.step, 10) === currentStep);
+    });
+    trailNodes.forEach(function (n) {
+      var idx = parseInt(n.dataset.step, 10);
+      n.classList.toggle("active", idx === currentStep);
+      n.classList.toggle("done", idx < currentStep);
+    });
+    stepCount.textContent = "Step " + (currentStep + 1) + " of " + totalSteps;
+    backBtn.disabled = currentStep === 0;
+    nextBtn.textContent = currentStep === totalSteps - 1 ? "See my snapshot" : "Continue";
+
+    var focusEl = steps[currentStep].querySelector("input");
+    if (focusEl) setTimeout(function () { focusEl.focus(); }, 50);
+  }
+
+  nextBtn.addEventListener("click", function () {
+    if (!validateCurrent()) return;
+    if (currentStep < totalSteps - 1) {
+      currentStep++;
+      render();
+    } else {
+      computeAndShowDashboard();
+    }
+  });
+
+  backBtn.addEventListener("click", function () {
+    if (currentStep > 0) { currentStep--; render(); }
+  });
+
+  [incomeInput, expensesInput, savingsInput].forEach(function (input) {
+    input.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter") { ev.preventDefault(); nextBtn.click(); }
+    });
+  });
+
+  goalGrid.addEventListener("click", function (ev) {
+    var btn = ev.target.closest(".goal-option");
+    if (!btn) return;
+    state.goal = btn.dataset.goal;
+    goalGrid.querySelectorAll(".goal-option").forEach(function (b) {
+      b.classList.toggle("selected", b === btn);
+    });
+    setNote("goalNote", "");
+  });
+
+  var editLink = document.getElementById("editLink");
+  editLink.addEventListener("click", function () {
+    document.getElementById("dashboard").classList.remove("visible");
+    currentStep = 0;
+    render();
+    wizard.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  function computeHealth(income, expenses, savings) {
+    var net = income - expenses;
+    var rate = income > 0 ? (net / income) * 100 : 0;
+    var runway = expenses > 0 ? savings / expenses : (savings > 0 ? Infinity : 0);
+    var level;
+    if (net <= 0 || rate < 8 || runway < 1) level = "poor";
+    else if (rate < 20 || runway < 3) level = "average";
+    else level = "strong";
+    return { net: net, rate: rate, runway: runway, level: level };
+  }
+
+  var healthCopy = {
+    poor: "Spending is close to or outpacing income, and the cushion is thin. Small, deliberate changes now will compound quickly.",
+    average: "There's a real gap between what comes in and what goes out — the foundation is there, it just needs to be built on.",
+    strong: "A healthy margin and a solid buffer. This is the moment to put the surplus to work deliberately."
+  };
+
+  var healthLabel = { poor: "Poor", average: "Average", strong: "Strong" };
+
+  function buildRecommendations(income, expenses, savings, goal, m) {
+    var recs = [];
+    var monthlyGap = m.net;
+
+    if (m.level === "poor") {
+      recs.push({
+        title: "Close the gap first",
+        body: monthlyGap <= 0
+          ? "You're spending " + fmt.format(Math.abs(monthlyGap)) + " more than you bring in each month. Before anything else, find " + fmt.format(Math.abs(monthlyGap) + Math.max(50, income * 0.05)) + " to cut so income covers expenses with room to spare."
+          : "Only " + fmt.format(monthlyGap) + " is left over each month. Look for the largest discretionary category and trim it before adding new goals."
+      });
+    } else {
+      recs.push({
+        title: "Automate the surplus",
+        body: "You're keeping " + fmt.format(monthlyGap) + " a month (" + m.rate.toFixed(0) + "% of income). Set up an automatic transfer the day you're paid so it never sits in checking long enough to get spent."
+      });
+    }
+
+    if (m.runway < 3 && isFinite(m.runway)) {
+      var target = expenses * 3;
+      var need = Math.max(0, target - savings);
+      recs.push({
+        title: "Build a 3-month buffer",
+        body: "At " + fmt.format(expenses) + " in monthly expenses, you're covered for " + m.runway.toFixed(1) + " month" + (m.runway.toFixed(1) === "1.0" ? "" : "s") + " if income stopped. Aim for " + fmt.format(target) + " — about " + fmt.format(need) + " more — before anything else competes for the surplus."
+      });
+    } else if (isFinite(m.runway)) {
+      recs.push({
+        title: "Buffer is solid",
+        body: "Your savings cover roughly " + m.runway.toFixed(1) + " months of expenses. That's a strong emergency cushion — anything beyond 6 months can reasonably move toward longer-term goals."
+      });
+    }
+
+    var goalRec = null;
+    if (goal === "Get out of debt") {
+      goalRec = {
+        title: "Target the debt directly",
+        body: monthlyGap > 0
+          ? "Redirect " + fmt.format(Math.max(0, monthlyGap * 0.7)) + " of your monthly surplus toward the highest-interest balance first — it clears faster than spreading payments evenly."
+          : "Once the monthly gap is closed, list every debt by interest rate and send extra payments to the highest one first."
+      };
+    } else if (goal === "Invest") {
+      goalRec = m.runway >= 3
+        ? { title: "Put the surplus to work", body: "With your buffer covered, consider directing " + fmt.format(Math.max(0, monthlyGap * 0.6)) + "/month into a low-cost diversified index fund rather than letting it accumulate as idle cash." }
+        : { title: "Buffer before investing", body: "Investing works best once 3 months of expenses are set aside — market dips shouldn't force you to sell early. Finish the buffer, then redirect that same amount into investing." };
+    } else if (goal === "Buy a home") {
+      var downPayment = expenses * 12 * 0.2 + income * 2;
+      var monthsToSave = monthlyGap > 0 ? Math.ceil((downPayment - savings) / monthlyGap) : null;
+      goalRec = {
+        title: "Map the down payment timeline",
+        body: monthsToSave && monthsToSave > 0
+          ? "A rough 20% down payment target lands near " + fmt.format(downPayment) + ". At your current pace, that's about " + monthsToSave + " months away — a dedicated high-yield savings account keeps it separate from everyday spending."
+          : "Once there's a consistent monthly surplus, open a dedicated high-yield savings account for the down payment so it's never mixed with everyday spending."
+      };
+    } else {
+      goalRec = {
+        title: "Give savings a destination",
+        body: "Split new savings into two buckets — one for the emergency buffer, one for whatever's next — so progress feels visible in both."
+      };
+    }
+
+    recs.push(goalRec);
+    return recs.slice(0, 3);
+  }
+
+  var rateRing = document.getElementById("rateRing");
+  var ringCircumference = 2 * Math.PI * 68;
+  rateRing.style.strokeDasharray = ringCircumference.toFixed(1);
+  rateRing.style.strokeDashoffset = ringCircumference.toFixed(1);
+  rateRing.style.transition = "stroke-dashoffset 0.9s cubic-bezier(0.22,1,0.36,1), stroke 0.4s ease";
+
+  function computeAndShowDashboard() {
+    var m = computeHealth(state.income, state.expenses, state.savings);
+
+    var pillEl = document.getElementById("healthPill");
+    pillEl.innerHTML = '<span class="health-pill health-' + m.level + '-tone"><span class="dot"></span>' + healthLabel[m.level] + ' financial health</span>';
+    document.getElementById("healthMessage").textContent = healthCopy[m.level];
+
+    var maxVal = Math.max(state.income, state.expenses, 1);
+    document.getElementById("incomeAmt").textContent = fmt.format(state.income);
+    document.getElementById("expensesAmt").textContent = fmt.format(state.expenses);
+    requestAnimationFrame(function () {
+      document.getElementById("incomeBar").style.width = (state.income / maxVal * 100).toFixed(1) + "%";
+      document.getElementById("expensesBar").style.width = (state.expenses / maxVal * 100).toFixed(1) + "%";
+    });
+
+    var netAmtEl = document.getElementById("netAmt");
+    var netLabelEl = document.getElementById("netLabel");
+    if (m.net >= 0) {
+      netLabelEl.textContent = "Left over each month";
+      netAmtEl.textContent = fmt.format(m.net);
+      netAmtEl.style.color = "var(--health-strong)";
+    } else {
+      netLabelEl.textContent = "Over budget each month";
+      netAmtEl.textContent = "−" + fmt.format(Math.abs(m.net));
+      netAmtEl.style.color = "var(--health-poor)";
+    }
+
+    var ratePctClamped = Math.max(0, Math.min(100, m.rate));
+    var offset = ringCircumference * (1 - ratePctClamped / 100);
+    var ringColor = m.level === "poor" ? "var(--health-poor)" : m.level === "average" ? "var(--health-average)" : "var(--health-strong)";
+    rateRing.style.stroke = ringColor;
+    requestAnimationFrame(function () { rateRing.style.strokeDashoffset = offset.toFixed(1); });
+    document.getElementById("ratePct").textContent = m.rate.toFixed(0) + "%";
+
+    document.getElementById("runwayCaption").textContent = isFinite(m.runway)
+      ? m.runway.toFixed(1) + " months of expenses covered by current savings"
+      : "No expenses recorded to compare savings against";
+
+    var recs = buildRecommendations(state.income, state.expenses, state.savings, state.goal, m);
+    document.getElementById("recList").innerHTML = recs.map(function (r) {
+      return '<div class="rec-item"><div><p class="rec-title">' + r.title + '</p><p>' + r.body + '</p></div></div>';
+    }).join("");
+
+    var dash = document.getElementById("dashboard");
+    dash.classList.add("visible");
+    setTimeout(function () { dash.scrollIntoView({ behavior: "smooth", block: "start" }); }, 80);
+  }
+
+  render();
+
+  // ---------- Booking ----------
+  var bookingForm = document.getElementById("bookingForm");
+  var confirmation = document.getElementById("confirmation");
+  bookingForm.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    document.getElementById("confName").textContent = document.getElementById("nameInput").value;
+    document.getElementById("confEmail").textContent = document.getElementById("emailInput").value;
+    document.getElementById("confTime").textContent = document.getElementById("timeInput").value;
+    bookingForm.style.display = "none";
+    confirmation.classList.add("visible");
+  });
+
+  // ---------- Theme toggle ----------
+  var root = document.documentElement;
+  var toggle = document.getElementById("themeToggle");
+  toggle.addEventListener("click", function () {
+    var current = root.getAttribute("data-theme");
+    var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var effectiveIsDark = current ? current === "dark" : prefersDark;
+    root.setAttribute("data-theme", effectiveIsDark ? "light" : "dark");
+  });
+
+  // ---------- Contour canvas ----------
+  var canvas = document.getElementById("contourCanvas");
+  var ctx = canvas.getContext("2d");
+
+  function isDark() {
+    var t = root.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+
+  function drawContours() {
+    var dpr = window.devicePixelRatio || 1;
+    var rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, rect.width, rect.height);
+
+    var cx = rect.width * 0.82;
+    var cy = rect.height * 0.42;
+    var color = isDark() ? "79, 179, 160" : "31, 111, 99";
+    var rings = 7;
+    for (var i = 0; i < rings; i++) {
+      var baseR = 30 + i * 26;
+      ctx.beginPath();
+      var pts = 64;
+      for (var p = 0; p <= pts; p++) {
+        var ang = (p / pts) * Math.PI * 2;
+        var wobble = Math.sin(ang * 3 + i * 1.3) * 6 + Math.cos(ang * 5 - i) * 4;
+        var r = baseR + wobble;
+        var x = cx + Math.cos(ang) * r;
+        var y = cy + Math.sin(ang) * r * 0.6;
+        if (p === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = "rgba(" + color + ", " + (0.16 - i * 0.014) + ")";
+      ctx.lineWidth = 1.1;
+      ctx.stroke();
+    }
+  }
+
+  drawContours();
+  window.addEventListener("resize", drawContours);
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawContours);
+})();
+</script>
