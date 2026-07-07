@@ -1,11 +1,11 @@
 // Central content source so every page stays consistent and easy to edit.
 
 export const brand = {
-  name: "Kinetiq",
+  name: "DXD",
   tagline: "Intelligent systems that compound growth.",
   description:
-    "Kinetiq is an AI-first growth and technology studio. We design, build, and run the intelligent systems that turn scattered effort into measurable, compounding revenue.",
-  email: "hello@kinetiq.studio",
+    "DXD is an AI-first growth and technology studio. We design, build, and run the intelligent systems that turn scattered effort into measurable, compounding revenue.",
+  email: "hello@dxd.studio",
   location: "Singapore · Remote across Asia",
 };
 

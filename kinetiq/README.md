@@ -1,6 +1,6 @@
-# Kinetiq
+# DXD
 
-Marketing site for **Kinetiq**, an AI-first growth & technology studio.
+Marketing site for **DXD**, an AI-first growth & technology studio.
 Built with Next.js 15 (App Router) + TypeScript. No CSS framework — the design
 system lives in [`app/globals.css`](app/globals.css).
 

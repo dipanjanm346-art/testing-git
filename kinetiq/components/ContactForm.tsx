@@ -15,7 +15,7 @@ export function ContactForm() {
     const message = String(data.get("message") || "");
 
     // No backend required: hand the message off to the user's mail client.
-    const subject = encodeURIComponent(`New project enquiry — ${name || "Kinetiq"}`);
+    const subject = encodeURIComponent(`New project enquiry — ${name || "DXD"}`);
     const bodyLines = [
       `Name: ${name}`,
       `Email: ${email}`,
