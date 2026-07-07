@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { brand, nav, services } from "@/lib/content";
+import { brand, nav, serviceCategories } from "@/lib/content";
 
 export function Footer() {
   return (
@@ -25,9 +25,9 @@ export function Footer() {
 
           <div className="footer__col">
             <h4>Capabilities</h4>
-            {services.slice(0, 5).map((s) => (
-              <Link key={s.index} href="/services">
-                {s.title}
+            {serviceCategories.map((c) => (
+              <Link key={c.slug} href={`/services#${c.slug}`}>
+                {c.title}
               </Link>
             ))}
           </div>

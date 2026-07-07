@@ -2,10 +2,11 @@ import Link from "next/link";
 import {
   brand,
   stats,
-  services,
+  serviceCategories,
   industries,
   approach,
 } from "@/lib/content";
+import { Icon } from "@/components/Icon";
 
 const Arrow = () => <span className="arrow">→</span>;
 
@@ -82,14 +83,23 @@ export default function Home() {
             </Link>
           </div>
           <div className="services-grid">
-            {services.map((s) => (
-              <article className="service" key={s.index}>
-                <span className="service__index">{s.index}</span>
-                <h3>{s.title}</h3>
-                <p className="service__summary">{s.summary}</p>
+            {serviceCategories.map((cat) => (
+              <article className="service" key={cat.slug}>
+                <div className="service__top">
+                  <span className="service__index">{cat.index}</span>
+                  <span className="service__glyph">
+                    <Icon name={cat.icon} size={18} />
+                  </span>
+                </div>
+                <h3>
+                  <Link href={`/services#${cat.slug}`}>{cat.title}</Link>
+                </h3>
+                <p className="service__summary">{cat.summary}</p>
                 <ul className="service__caps">
-                  {s.capabilities.map((c) => (
-                    <li key={c}>{c}</li>
+                  {cat.subServices.map((s) => (
+                    <li key={s.slug}>
+                      <Link href={`/services/${s.slug}`}>{s.title}</Link>
+                    </li>
                   ))}
                 </ul>
               </article>

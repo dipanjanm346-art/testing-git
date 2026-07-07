@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { services, approach } from "@/lib/content";
+import { serviceCategories, approach, allSubServices } from "@/lib/content";
+import { Icon } from "@/components/Icon";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "AI & software development, web & app engineering, UI/UX, performance marketing, automation, and proprietary growth products.",
+    "AI & software development, web & app engineering, UI/UX, performance marketing, automation, and support — every capability, with dedicated pages.",
 };
 
 const Arrow = () => <span className="arrow">→</span>;
@@ -19,30 +20,39 @@ export default function ServicesPage() {
           <span className="eyebrow">Services</span>
           <h1>Everything it takes to design, build, and grow.</h1>
           <p className="lede" style={{ marginTop: 26 }}>
-            Six connected capabilities, delivered by senior teams as one system —
-            so strategy, product, and marketing pull in the same direction.
+            Six connected capabilities and {allSubServices.length} specialist
+            services, delivered by senior teams as one system — so strategy,
+            product, and marketing pull in the same direction.
           </p>
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="services-grid">
-            {services.map((s) => (
-              <article className="service" key={s.index}>
-                <span className="service__index">{s.index}</span>
-                <h3>{s.title}</h3>
-                <p className="service__summary">{s.summary}</p>
-                <ul className="service__caps">
-                  {s.capabilities.map((c) => (
-                    <li key={c}>{c}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
+      {serviceCategories.map((cat) => (
+        <section className="section catblock" id={cat.slug} key={cat.slug} style={{ scrollMarginTop: 90 }}>
+          <div className="container">
+            <div className="catblock__head">
+              <span className="catblock__icon">
+                <Icon name={cat.icon} size={22} />
+              </span>
+              <div>
+                <span className="service__index">{cat.index}</span>
+                <h2>{cat.title}</h2>
+                <p className="catblock__summary">{cat.summary}</p>
+              </div>
+            </div>
+
+            <div className="sub-grid">
+              {cat.subServices.map((s) => (
+                <Link key={s.slug} href={`/services/${s.slug}`} className="sub-card">
+                  <h3>{s.title}</h3>
+                  <p>{s.blurb}</p>
+                  <span className="sub-card__go">Explore service {Arrow()}</span>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ))}
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
